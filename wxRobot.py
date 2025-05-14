@@ -25,7 +25,7 @@ def is_int(s):
 def local_picture(name):
       img_url ='https://api.dongmanxingkong.com/suijitupian/acg/1080p/index.php'
       img = requests.get(img_url,verify=False) 
-      f = open('C:\\pic\\'+str(name)+'.jpg','ab') #存储图片，多媒体文件需要参数b（二进制文件）
+      f = open('C:\\Users\\Simon\\Pictures\\'+str(name)+'.jpg','ab') #存储图片，多媒体文件需要参数b（二进制文件）
       f.write(img.content) #多媒体存储content
       f.close()
 
@@ -39,14 +39,18 @@ msgDB.delMsg()
 
 #for i in range(1000):#清除所有未处理消息
 #    msgDB.delMsg()
-
+print('111')
 for i in range(1000):
     try:
         res=msgDB.listen_wxMsg()
-
+        print(res, i )
+        time.sleep(3)
         if res==False:#未监听到消息
             continue
-        
+
+        print(res[0])
+        print(res[3])
+
         if res[3]=="菜单":
             print(res[0])
             msgDB.send_wxMsg(res[0],'''功能列表：
@@ -66,7 +70,7 @@ for i in range(1000):
             
             for i in range(int(res[3].split()[1])):
                 local_picture("test")
-                msgDB.send_wxPicture(res[0],"C:\\pic\\"+str(random.randint(0,1000))+".jpg")
+                msgDB.send_wxPicture(res[0],"C:\\Users\\Simon\\Pictures\\"+str(random.randint(0,1000))+".jpg")
                 #msgDB.send_wxPicture(res[0],"C:\\1.jpg")
                 msgDB.delMsg()
                 continue
